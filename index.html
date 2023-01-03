@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color:#f1f1d4">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="https://i.ibb.co/MGmS24d/image-removebg-preview-1.png" type="image/png">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<title>notepad</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+		/*main css*/
+		@import "main_css.css";
+
+	</style>
+	<script src="https://baltej223.github.io/b.js/b.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+	<button name="menu" id="menu" contenteditable="false">&#9776;</button>
+	<hr class="top hr">
+	<center class="title">
+		<h1 class="title" id="title" contenteditable="true" style="background-color:#f1f1d4"> Title</h1>
+	</center>
+	<hr class="vertical hr">
+	<div class="editable-division" contenteditable="true" id="editaabeleeeee">
+	</div>
+	<div id="blur"></div>
+	<div id="not-visible" style="display:none;">
+		<center>
+			<div class="black">
+				<table border="1" class="table">
+					<tbody>
+						<td>close</td>
+						<td><button
+								onclick="document.getElementById('not-visible').style.display = 'none'; document.getElementById('blur').style.display = 'none'"
+								id="colosole">X</button></td>
+						<tr class="cell">
+							<td>words</td>
+							<td id="len"></td>
+						</tr>
+						<tr class="cell">
+							<td>clear all</td>
+							<td><button onclick="location.reload()">clear all</button></td>
+						</tr>
+						<tr class="cell">
+							<td>print</td>
+							<td><button onclick="window.print()">print</button></td>
+						</tr>
+						<tr class="cell">
+							<td>font type</td>
+							<td> <input type="text" id="fonttype" placeholder="write font name here" value="calibri">
+							</td>
+						</tr>
+						<tr class="cell">
+							<td>font size</td>
+							<td><input type="text" id="fontsize" placeholder="write font size here in px" value="20">
+							</td>
+						</tr>
+						<tr class="cell">
+							<td>open (use .mno file)</td>
+							<td><input type="file" id="inputfile"></td>
+						</tr>
+						<tr class="cell">
+							<td>save</td>
+							<td><button id="save">save</button></td>
+						</tr>
+						<tr class="cell">
+							<td>command</td>
+							<td><button id="command">open command box</button></td>
+						</tr>
+						<tr class="cell">
+							<td>how to use commands</td>
+							<td><button id="how_to_use_commands">how to use commands</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</center>
+	</div>
+	<p style="display:none;" id="theme"></p>
+	<button style="display:none;" id="no_button"></button>
+	<script>
+		$('#fonttype').on('keydown',function(){
+			var a = document.getElementById("fonttype").value;
+			document.body.style.fontFamily = a;
+		});
+		$('#fontsize').on('keydown',function(){
+			var e = document.getElementById("fontsize").value;
+			document.getElementsByClassName("editable-division")[0].style.fontSize = e + 'px';
+		});
+		var a324890 = document.getElementById("fonttype").value;
+		document.body.style.fontFamily = a324890;
+			var e427 = document.getElementById("fontsize").value;
+			document.getElementsByClassName("editable-division")[0].style.fontSize = e427 + 'px';
+		$('#editaabeleeeee').on('keydown',function(){
+			$('#len').html($('#editaabeleeeee').html().split(' ').length);
+		});
+		//*************************
+		setInterval(detectScreenSizeAndSomeOtherStuff, 600);
+		setInterval(hr, 600);
+		function close() {
+			document.getElementById("not-visible").style.display = "none";
+		}
+		var zz = document.getElementById("not-visible");
+		var blur_back = document.getElementById("blur");
+		document.body.addEventListener("keydown", function (event) {
+			if (event.ctrlKey & event.keyCode == 66) {
+				zz.style.display == "block" ? zz.style.display = "none" :
+					zz.style.display = "block";
+
+				blur_back.style.display == "block" ? blur_back.style.display = "none" :
+					blur_back.style.display = "block";
+			}
+		});
+		function download(filename, text) {
+			var element = document.createElement('a');
+			element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+			element.setAttribute('download', filename);
+			element.style.display = 'none';
+			document.body.appendChild(element);
+			element.click();
+			document.body.removeChild(element);
+		}
+		// Start file download.
+		document.getElementById("save").addEventListener("click", function () {
+			// Generate download of hello.txt file with some content
+			var title = document.getElementById("title").innerHTML;
+			var txtsze = document.getElementById("fontsize").value;
+			var fnt = document.getElementById("fonttype").value;
+			var theme = document.getElementById("theme").innerHTML;
+			var textOne = document.getElementsByClassName("editable-division")[0].innerHTML;
+			var textTwo = `\#theme ${theme} theme# \#style ${txtsze} & ${fnt} style# \start# ${title} ?end# ${textOne}`;
+			var text = window.btoa(textTwo);
+			var textd = window.btoa(text);
+			var texte = window.btoa(textd);
+
+			//var a = document.getElementById("download-file-name-selector").value;
+			var title = document.getElementById("title").innerHTML;
+			var filename = `${title}.mno`;
+			download(filename, texte);
+		}, false);
+		document.getElementById('inputfile')
+			.addEventListener('change', function () {
+
+				var fr = new FileReader();
+				fr.onload = function () {
+					document.getElementsByClassName('editable-division')[0].innerHTML = "loading...";
+					document.getElementsByClassName('editable-division')[0].innerHTML = fr.result;
+					decode();
+				}
+
+				fr.readAsText(this.files[0]);
+			})
+		function decode() {
+			var enc = document.getElementsByClassName('editable-division')[0].innerHTML;
+			var mec = window.atob(enc);
+			var eec = window.atob(mec);
+			var dec = window.atob(eec);
+			//--------------------------
+			var three = dec.search("\start#");
+			var four = dec.search("end#");
+			var mid = dec.slice(four);
+			editaabeleeeeewritte = mid.replace("end#", " ");
+			var start = dec.slice(three, four);
+			var foo = start.replace("start#", " ");
+			var foo2 = foo.replace("?", " ");
+			var foo3 = foo2.split("+");
+			var foo4 = foo3.join(" ");
+			var title = document.getElementById("title").innerHTML = foo4;
+			document.getElementsByClassName('editable-division')[0].innerHTML = editaabeleeeeewritte;
+			//--------
+			var three = dec.search("\#style");
+			var four = dec.search("style#");
+			var five = dec.slice(three, four).replace("#style", " ");
+			var six = five.search("&");
+			var textsize = five.slice(0, six);
+			var font = five.slice(six + 1);
+			var rst = textsize.replace(" ", "");
+			var dbrst = font.replace(" ", "")
+			document.getElementById("fontsize").value = rst;
+			document.getElementById("fonttype").value = dbrst;
+
+			if (dec.includes("#theme")) {
+				if (dec.includes("theme#")) {
+					var theme_str = dec.search("#theme")
+					var theme_end = dec.search("theme#")
+					var thm_cut = dec.slice(theme_str++ + 6, theme_end);
+					if (thm_cut.includes("dark")) {
+						document.getElementsByTagName("html")[0].style.backgroundColor = "#223a5e";
+						document.getElementsByClassName('editable-division')[0].style.color = "white";
+						document.getElementsByClassName('title')[1].style.color = "white";
+						document.getElementsByClassName('title')[1].style.backgroundColor = "#223a5e";
+						document.getElementById("theme").innerHTML = "dark";
+					}
+					if (thm_cut.includes("light")) {
+						document.getElementsByTagName("html")[0].style.backgroundColor = "#f1f1d4";
+						document.getElementsByClassName('editable-division')[0].style.color = "black";
+						document.getElementsByClassName('title')[1].style.color = "black";
+						document.getElementsByClassName('title')[1].style.backgroundColor = "#f1f1d4";
+						document.getElementById("theme").innerHTML = "light";
+					}
+					if (thm_cut.includes("white")) {
+						document.getElementsByTagName("html")[0].style.backgroundColor = "white";
+						document.getElementsByClassName('editable-division')[0].style.color = "black";
+						document.getElementsByClassName('title')[1].style.color = "black";
+						document.getElementsByClassName('title')[1].style.backgroundColor = "white";
+						document.getElementById("theme").innerHTML = "white";
+					}
+					if (thm_cut = null) {
+						document.getElementsByTagName("html")[0].style.backgroundColor = "#223a5e";
+						document.getElementsByClassName('editable-division')[0].style.color = "white";
+						document.getElementsByClassName('title')[1].style.color = "white";
+						document.getElementsByClassName('title')[1].style.backgroundColor = "#223a5e";
+						document.getElementById("theme").innerHTML = "dark";
+					}
+				}
+			}
+			else {
+				document.getElementsByTagName("html")[0].style.backgroundColor = "#223a5e";
+				document.getElementsByClassName('editable-division')[0].style.color = "white";
+				document.getElementsByClassName('title')[1].style.color = "white";
+				document.getElementsByClassName('title')[1].style.backgroundColor = "#223a5e";
+				document.getElementById("theme").innerHTML = "dark";
+			}
+			//function decode ended
+		}
+		document.body.addEventListener("keydown", function (event) {
+			if (event.shiftKey & event.keyCode == 67) {
+				console()
+			}
+		});
+		function console() {
+			var input = prompt("write your commands here:");
+			if (input.includes("@")) {
+				var res = input.split("@");
+				var resss222 = res.join(" ");
+				document.getElementById("fonttype").value = resss222;
+			}
+			if (input.includes("#")) {
+				var res11 = input.split("#");
+				var resss22211 = res11.join(" ");
+				document.getElementById("fontsize").value = resss22211;
+			}
+			if (input == "clear_all") {
+				document.getElementsByClassName('editable-division')[0].innerHTML = null;
+			}
+			if (input == "date") {
+				var year = new Date();
+				year.getFullYear();
+				document.getElementsByClassName('editable-division')[0].innerHTML = year;
+			}
+			if (input == "dark") {
+				document.getElementsByTagName("html")[0].style.backgroundColor = "#223a5e";
+				document.getElementsByClassName('editable-division')[0].style.color = "white";
+				document.getElementsByClassName('title')[1].style.color = "white";
+				document.getElementsByClassName('title')[1].style.backgroundColor = "#223a5e";
+				document.getElementById("theme").innerHTML = "dark";
+			}
+			if (input == "light") {
+				document.getElementsByTagName("html")[0].style.backgroundColor = "#f1f1d4";
+				document.getElementsByClassName('editable-division')[0].style.color = "black";
+				document.getElementsByClassName('title')[1].style.color = "black";
+				document.getElementsByClassName('title')[1].style.backgroundColor = "#f1f1d4";
+				document.getElementById("theme").innerHTML = "light";
+			}
+			if (input == "white") {
+				document.getElementsByTagName("html")[0].style.backgroundColor = "white";
+				document.getElementsByClassName('editable-division')[0].style.color = "black";
+				document.getElementsByClassName('title')[1].style.color = "black";
+				document.getElementsByClassName('title')[1].style.backgroundColor = "white";
+				document.getElementById("theme").innerHTML = "white";
+			}
+			if (input == "dec") {
+				decode();
+			}
+			if (input == "new") {
+				var inputnew = prompt("Element write full :");
+				if (inputnew != null) {
+					var inr = document.getElementsByClassName('editable-division')[0].innerHTML;
+					if (inr != null) {
+						var cr = inr + inputnew;
+						document.getElementsByClassName('editable-division')[0].innerHTML = cr;
+					}
+					else {
+						document.getElementsByClassName('editable-division')[0].innerHTML = inputnew;
+					}
+				}
+			}
+			//promt function closing
+		}
+		document.body.addEventListener("keydown", function (event) {
+			if (event.ctrlKey & event.keyCode == 83) {
+				document.getElementById("save").click();
+			}
+		});
+		function detectScreenSizeAndSomeOtherStuff() {
+			if (screen.width < "440") {
+				document.getElementsByClassName('editable-division')[0].style.marginLeft = "0px";
+				document.getElementsByClassName("table")[0].style.position = "fixed";
+				document.getElementsByClassName("table")[0].style.top = "200px";
+				document.getElementsByClassName("table")[0].style.left = "5px";
+			}
+			else {
+				document.getElementsByClassName('editable-division')[0].style.marginLeft = "140px";
+			}
+		}
+		document.getElementById("menu").addEventListener("click", function (event) {
+			zz.style.display == "block" ? zz.style.display = "none" :
+				zz.style.display = "block";
+
+			blur_back.style.display == "block" ? blur_back.style.display = "none" :
+				blur_back.style.display = "block";
+		});
+		document.getElementById("command").addEventListener("click", console);
+		function how_to_use_commands() {
+			let confirmAction = confirm("Everything written will be erased. Do you want to continue");
+			if (confirmAction) {
+				var how_to_use_commands = 'use "@" befour any font type and it will be applied to written text (example @calibri).<br> use "#" befour and font size and it would be applied to written text (example #25)<br> use "clear_all" to clear all,<br> "date" to write date <br> "dark" for dark theme <br> "light" for light theme<br>';
+				document.getElementsByClassName('editable-division')[0].innerHTML = how_to_use_commands;
+			}
+		}
+		document.getElementById("how_to_use_commands").addEventListener("click", how_to_use_commands);
+		//-- turn on dark mode
+		document.getElementsByTagName("html")[0].style.backgroundColor = "#223a5e";
+		document.getElementsByClassName('editable-division')[0].style.color = "white";
+		document.getElementsByClassName('title')[1].style.color = "white";
+		document.getElementsByClassName('title')[1].style.backgroundColor = "#223a5e";
+		document.getElementById("theme").innerHTML = "dark";
+		//------hr-------
+		function hr() {
+			let hrp = document.getElementById("theme").innerHTML;
+			const element = document.body;
+			const nodes = element.getElementsByClassName("hr");
+			if (hrp.includes("light")) {
+				for (let i = 0; i < nodes.length; i++) {
+					nodes[i].style.background = "black";
+				}
+			}
+			if (hrp.includes("dark")) {
+				for (let i = 0; i < nodes.length; i++) {
+					nodes[i].style.background = "white";
+				}
+			}
+			if (hrp.includes("white")) {
+				for (let i = 0; i < nodes.length; i++) {
+					nodes[i].style.background = "black";
+				}
+			}
+		}
+	</script>
+	<script src="js.js"></script>
+
+</html>
