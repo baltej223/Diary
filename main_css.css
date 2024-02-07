@@ -20,8 +20,12 @@ margin-left:140px;
 height:1000px;
 z-index:4;
 margin-top:-20px;
-line-height:220%;
-/*text-decoration:underline;*/
+/*-----------------------------------------------------------------------------------*/
+line-height:140%;
+/*line-hight property is used to increase or decrease spacing between two adjacent lines*/
+/* line-height was 220% from the day it was published to date 07-feb-2024*/
+/* for now i am changing it to 140%*/
+/*----------------------------------------------------------------------------------*/
 outline:none;
 }
 .lines{
