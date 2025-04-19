@@ -82,18 +82,21 @@
 	<p style="display:none;" id="theme"></p>
 	<button style="display:none;" id="no_button"></button>
 	<script>
-		$('#fonttype').on('keydown',function(){
+		$('#fonttype').on('keyup',function(){
 			var a = document.getElementById("fonttype").value;
 			document.body.style.fontFamily = a;
 		});
-		$('#fontsize').on('keydown',function(){
+		$('#fontsize').on('keyup',function(){
 			var e = document.getElementById("fontsize").value;
 			document.getElementsByClassName("editable-division")[0].style.fontSize = e + 'px';
 		});
+
 		var a324890 = document.getElementById("fonttype").value;
 		document.body.style.fontFamily = a324890;
 			var e427 = document.getElementById("fontsize").value;
 			document.getElementsByClassName("editable-division")[0].style.fontSize = e427 + 'px';
+
+
 		$('#editaabeleeeee').on('keydown',function(){
 			$('#len').html($('#editaabeleeeee').html().split(' ').length);
 		});
